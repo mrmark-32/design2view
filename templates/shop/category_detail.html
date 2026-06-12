@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ category.name }} - Premium Collection{% endblock %}
+
+{% block content %}
+<div class="container-fluid text-white overflow-hidden category-hero-banner" 
+     style="background: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.9)), url('{{ category.image.url }}') no-repeat center center/cover;">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8 text-center text-lg-start">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb justify-content-center justify-content-lg-start mb-0">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted">Home</a></li>
+                        <li class="breadcrumb-item active breadcrumb-current" aria-current="page">{{ category.name }}</li>
+                    </ol>
+                </nav>
+                <h1 class="display-3 fw-extrabold text-white mb-2 text-uppercase heading-title">
+                    {{ category.name }}
+                </h1>
+                <p class="lead fw-light description-sub">
+                    Experience exceptional premium craftsmanship tailored completely around your lifestyle and window architecture.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="about-details-section py-5">
+    <div class="container my-4">
+        <div class="row align-items-center g-5">
+            
+            <div class="col-12 col-lg-6 text-content-pane">
+                <span class="text-uppercase fw-bold tracking-wider small d-block mb-2 section-subtitle">The Collection Experience</span>
+                <h2 class="text-white mb-4 text-uppercase fw-bold section-title">About This Treatment</h2>
+                <div class="fs-5 lh-base dynamic-description">
+                    {{ category.description|linebreaks }}
+                </div>
+            </div>
+            
+            <div class="col-12 col-lg-6">
+                <div class="p-4 p-md-5 rounded-3 highlights-dark-card">
+                    <h4 class="text-white mb-4 text-uppercase fw-bold card-header-title">Collection Highlights</h4>
+                    <ul class="list-unstyled mb-0 feature-list">
+                        
+                        <li class="mb-3 d-flex align-items-start">
+                            <span class="me-3 fw-bold list-checkmark">✓</span>
+                            <span>{{ category.highlight_1 }}</span>
+                        </li>
+                        
+                        <li class="mb-3 d-flex align-items-start">
+                            <span class="me-3 fw-bold list-checkmark">✓</span>
+                            <span>{{ category.highlight_2 }}</span>
+                        </li>
+                        
+                        <li class="mb-0 d-flex align-items-start">
+                            <span class="me-3 fw-bold list-checkmark">✓</span>
+                            <span>{{ category.highlight_3 }}</span>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="slick-slider" id="fabricTypeSlider">
+    
+    {% for fabric in category.fabrics.all %}
+    <div class="item px-2">
+        <div class="border-0 rounded-3 overflow-hidden text-center h-100 style-fabric-card">
+            <div class="fabric-image-container" style="height: 220px; overflow: hidden;">
+                <img src="{{ fabric.image.url }}" alt="{{ fabric.name }}" class="w-100 h-100" style="object-fit: cover;" loading="lazy">
+            </div>
+            <div class="p-4 card-body-pane">
+                <h4 class="text-white text-uppercase fw-bold mb-2 fabric-title">{{ fabric.name }}</h4>
+                <p class="small mb-0 fabric-description">{{ fabric.description }}</p>
+                
+                <a href="{% url 'fabric_detail' category_slug=category.slug fabric_id=fabric.id %}" 
+                   class="text-uppercase small fw-extrabold text-decoration-none custom-explore-btn mt-3 d-inline-block">
+                    Explore More <span class="arrow-transform">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-4">
+        <p class="text-muted small">No fabric variations loaded for this collection group yet.</p>
+    </div>
+    {% endfor %}
+
+</div>
+
+<script>
+    $(document).ready(function(){
+        // Only initialize slick if elements exist inside the container to prevent JS crashes
+        if ($('#fabricTypeSlider .item').length > 0) {
+            $('#fabricTypeSlider').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: true,
+                dots: true,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: { slidesToShow: 2 }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: { slidesToShow: 1, dots: false }
+                    }
+                ]
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-xl navbar-dark position-absolute w-100 custom-navbar" style="top: 0; left: 0; z-index: 1050;">
+    <div class="container"> 
+        
+        <a class="navbar-brand fw-bold text-primary fs-4" href="{% url 'home' %}" style="letter-spacing: 0.5px;">
+            Design<span class="secondary-color">2</span>View
+        </a>
+        
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainD2VMenu" aria-controls="mainD2VMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="mainD2VMenu">
+            <ul class="navbar-nav ms-auto align-items-center">
+                
+                {% for item in nav_items %}
+                    {% if not item.parent %}
+                        
+                        {% if item.children.all %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle px-3 text-uppercase fw-semibold" 
+                                   href="#" 
+                                   id="navbarDropdown{{ item.id }}" 
+                                   role="button" 
+                                   data-bs-toggle="dropdown" 
+                                   aria-expanded="false">
+                                    {{ item.title }}
+                                </a>
+                                
+                                <ul class="dropdown-menu dropdown-menu-dark bg-dark border-secondary shadow" aria-labelledby="navbarDropdown{{ item.id }}">
+                                    {% for child in item.children.all %}
+                                    <li>
+                                        <a class="dropdown-item py-2 text-uppercase fw-medium style-dropdown-link" 
+                                           href="{% if '/' in child.url_name or '#' in child.url_name %}{{ child.url_name }}{% else %}{% url 'category_detail' slug=child.slug %}{% endif %}">
+                                            {{ child.title }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link px-3 text-uppercase {% if item.is_premium_highlight %}club-premium-link{% else %}fw-semibold{% endif %}" 
+                                   href="{% if '/' in item.url_name or '#' in item.url_name %}{{ item.url_name }}{% else %}{% url item.url_name %}{% endif %}">
+                                    {{ item.title }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                    {% endif %}
+                {% endfor %}
+                
+            </ul>
+        </div>
+
+    </div>
+</nav>

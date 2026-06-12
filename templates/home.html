@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Design2View{% endblock %}
+
+{% block content %}
+
+<!-- ========================
+     HERO SECTION
+======================== -->
+<section class="hero-section">
+
+    <!-- Decorative blind slats (right side accent) -->
+    <div class="hero-slats" aria-hidden="true">
+        <div class="slat"></div>
+        <div class="slat" style="margin-left: 14px;"></div>
+        <div class="slat" style="margin-left: 4px;"></div>
+        <div class="slat" style="margin-left: 20px;"></div>
+        <div class="slat" style="margin-left: 8px;"></div>
+        <div class="slat" style="margin-left: 24px;"></div>
+        <div class="slat" style="margin-left: 2px;"></div>
+        <div class="slat" style="margin-left: 16px;"></div>
+        <div class="slat" style="margin-left: 10px;"></div>
+        <div class="slat" style="margin-left: 22px;"></div>
+        <div class="slat" style="margin-left: 6px;"></div>
+        <div class="slat" style="margin-left: 18px;"></div>
+    </div>
+
+    <div class="container hero-content">
+        <div class="row">
+            <div class="col-12 col-lg-7 col-xl-6">
+
+                <div class="hero-badge">Premium Collections</div>
+
+                <h1 class="hero-title">
+                    Transform Your Creative Concepts Into
+                    <span class="gold">Stunning Realities</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Discover exceptional fabrics, elite marketing strategies, and comprehensive
+                    styling configurations tailored completely around your dynamic business vision.
+                </p>
+
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#" class="btn-hero-primary">Explore Collection</a>
+                    <a href="#" class="btn-hero-outline">Join Club</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ========================
+     STATS STRIP
+======================== -->
+<section class="stats-strip">
+    <div class="container">
+        <div class="row text-center g-0">
+            <div class="col-6 col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Fabric Collections</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">1,200+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mt-4 mt-md-0">
+                <div class="stat-item">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mt-4 mt-md-0">
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ========================
+     CUSTOM BLINDS SECTION - BLACK (Image Left + Content Right)
+======================== -->
+<section class="blinds-section-black">
+  <div class="container blinds-content">
+    <div class="row align-items-center">
+
+      <!-- Left Side - Image -->
+      <div class="col-lg-6 blinds-image-col">
+        <div class="blinds-image-wrapper">
+          <img src="{% static 'images/about/aboutimage.webp' %}" 
+               alt="Premium Custom Blinds in Mississauga - Design2View" 
+               loading="lazy">
+        </div>
+      </div>
+
+      <!-- Right Side - Content -->
+      <div class="col-lg-6 blinds-text-col">
+        <h2>Let's Make Your Window Beautiful!</h2>
+        <div class="blinds-subtitle">Custom Blinds for Every Home and Office</div>
+        
+        <p class="blinds-description">
+          Design2View specializes in combining style, function, and a personalized touch to deliver 
+          the best custom blinds in Mississauga. As window treatment specialists, we serve both 
+          residential and commercial clients across Mississauga looking for the perfect fit for their space.
+        </p>
+        
+        <p class="blinds-description">
+          From modern roller blinds to versatile zebra shades, our extensive collection offers 
+          hundreds of colors and designs to match every style and taste. We provide <strong>free home consultations</strong> 
+          and professional installation services — our expert team is with you from start to finish.
+        </p>
+
+        <a href="#" class="btn-hero-primary btn-blinds-cta">Get Your Free Consultation</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================
+     DYNAMIC CATEGORIES SLICK SLIDER
+======================== -->
+<section class="categories-section">
+  <div class="container">
+    <h2>Our Popular Collections</h2>
+    <p>Discover premium window treatments crafted for style, comfort, and functionality</p>
+
+    <div class="slick-slider" id="categorySlider">
+
+      {% for category in categories %}
+      <div class="item">
+        <div class="category-card">
+          {% if category.image %}
+            <img src="{{ category.image.url }}" 
+                 alt="{{ category.name }}" 
+                 loading="lazy">
+          {% else %}
+            <img src="{% static 'images/categories/default.webp' %}" 
+                 alt="{{ category.name }}" 
+                 loading="lazy">
+          {% endif %}
+          
+          <div class="category-info">
+            <h4>{{ category.name }}</h4>
+            <p>{{ category.description|truncatewords:15|default:"Premium window treatment solution" }}</p>
+            <a href="{% url 'category_detail' slug=category.slug %}" class="category-btn fw-bold" style="color: var(--primary-color);">Explore Collection →</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="item">
+        <div class="category-card">
+          <p>No categories available yet.</p>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ========================
+     CALL TO ACTION SECTION
+======================== -->
+<section class="cta-section">
+  <div class="container cta-content">
+    <h2>Ready to Transform Your Windows?</h2>
+    <p>Let our experts help you choose the perfect custom blinds for your home or office in Mississauga. Get a free consultation and professional installation today.</p>
+    
+    <div class="mt-4">
+      <a href="#" class="cta-btn">Get Free Consultation</a>
+      <a href="#" class="cta-btn cta-btn-outline">Browse Collections</a>
+    </div>
+  </div>
+</section>
+
+
+
+
+{% endblock %}
